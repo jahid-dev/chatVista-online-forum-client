@@ -32,9 +32,9 @@ const profileMenuItems = [
     icon: UserCircleIcon,
   },
   {
-    label: "Dashboard",
+    label: <NavLink to= '/dashboard'>Dashboard</NavLink>,
     icon: ComputerDesktopIcon,
-  },
+  },            
   {
     label: "Sign Out",
     icon: PowerIcon,
