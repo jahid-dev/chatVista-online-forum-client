@@ -12,14 +12,18 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import {
-    UserGroupIcon,
+  HomeIcon,
+  ArrowRightOnRectangleIcon,
+  UserGroupIcon,
   UserCircleIcon,
   UserPlusIcon,
   ChevronDownIcon,
   ComputerDesktopIcon,
   PowerIcon,
   Bars2Icon,
+  BellIcon,
 } from "@heroicons/react/24/solid";
+import { NavLink } from "react-router-dom";
  
 // profile menu component
 const profileMenuItems = [
@@ -104,8 +108,8 @@ function ProfileMenu() {
 // nav list component
 const navListItems = [
   {
-    label: "Home",
-    icon: UserCircleIcon,
+    label: <NavLink to= '/'>Home</NavLink>,
+    icon: HomeIcon,
   },
   {
     label: "Membership",
@@ -115,6 +119,11 @@ const navListItems = [
     label: "Join Us",
     icon: UserPlusIcon,
   },
+  {
+    label: "Log In",
+    icon: ArrowRightOnRectangleIcon,
+  },
+  
 ];
  
 function NavList() {
@@ -124,7 +133,6 @@ function NavList() {
         <Typography
           key={label}
           as="a"
-          href="#"
           variant="small"
           color="gray"
           className="font-medium text-blue-gray-500"
@@ -176,11 +184,12 @@ export const NavBar = () => {
         >
           <Bars2Icon className="h-6 w-6" />
         </IconButton>
- 
-        <Button size="sm" variant="text">
-          <span>Log In</span>
-        </Button>
-        <ProfileMenu />
+        <div className="flex items-center">
+        <IconButton variant="text" color="black">
+            <BellIcon className="h-4 w-4" />
+          </IconButton>
+          <ProfileMenu />
+        </div>
       </div>
       <MobileNav open={isNavOpen} className="overflow-scroll">
         <NavList />
