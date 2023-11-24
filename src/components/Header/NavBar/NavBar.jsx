@@ -23,7 +23,7 @@ import {
   Bars2Icon,
   BellIcon,
 } from "@heroicons/react/24/solid";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
  
 // profile menu component
 const profileMenuItems = [
@@ -32,7 +32,7 @@ const profileMenuItems = [
     icon: UserCircleIcon,
   },
   {
-    label: <NavLink to= '/dashboard'>Dashboard</NavLink>,
+    label: <Link to= '/dashboard'>Dashboard</Link>,
     icon: ComputerDesktopIcon,
   },            
   {

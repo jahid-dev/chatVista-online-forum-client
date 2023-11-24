@@ -1,15 +1,59 @@
 import { NavLink, Outlet } from "react-router-dom";
 
-
 const Dashboard = () => {
     return (
-        <div>
-            <div>
-                <NavLink to= "myprofile">My Profile</NavLink>
-                <NavLink to= "addpost">Add Post</NavLink>
-            </div>
-            <div>
-                <Outlet></Outlet>
+        <div className="flex flex-col md:flex-row min-h-screen">
+            {/* Sidebar */}
+            <aside className="bg-white text-white shadow-2xl w-full md:w-64 p-6 md:min-h-screen">
+                <div className="flex items-center mb-8">
+                    <img className="w-12 mr-2" src="https://i.ibb.co/NjF9Xrb/Adobe-Stock-3-Xfw-F5i-Vh-D.png" alt="" />
+                    <span className="text-2xl font-bold text-black">chatVista</span>
+                </div>
+                <div className="mb-4">
+                    <h2 className="text-2xl font-semibold text-center text-black">Admin</h2>
+                </div>
+                <nav>
+                    <ul className="text-center text-black">
+                        <li>
+                            <NavLink
+                                to="myprofile"
+                                className="block py-2 px-4 hover:bg-gray-500 rounded"
+                                activeClassName="bg-blue-700"
+                            >
+                                My Profile
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="addpost"
+                                className="block py-2 px-4 hover:bg-gray-500 rounded"
+                                activeClassName="bg-blue-700"
+                            >
+                                Add Post
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="mypost"
+                                className="block py-2 px-4 hover:bg-gray-500 rounded"
+                                activeClassName="bg-blue-700"
+                            >
+                                My Post
+                            </NavLink>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            {/* Main Content */}
+            <div className="flex-1 flex flex-col overflow-hidden">
+                {/* Add a top navbar if needed */}
+                {/* <header className="bg-white shadow p-4"> */}
+                    {/* Add any header content here */}
+                {/* </header> */}
+                <main className="flex-1 overflow-x-hidden overflow-y-auto p-6">
+                    <Outlet />
+                </main>
             </div>
         </div>
     );
