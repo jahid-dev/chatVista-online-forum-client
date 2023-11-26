@@ -57,19 +57,19 @@ const router = createBrowserRouter([
 
         {
           path: 'adminProfile',
-          element: <AdminRoute><AdminProfile></AdminProfile></AdminRoute>
+          element:<AdminProfile></AdminProfile>
         },
         {
           path: 'makeannouncement',
-          element: <AdminRoute><MakeAnnouncement></MakeAnnouncement></AdminRoute>
+          element:<MakeAnnouncement></MakeAnnouncement>
         },
         {
           path: 'manageusers',
-          element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
+          element:<ManageUsers></ManageUsers>
         },
         {
           path: 'reportedcomments',
-          element: <AdminRoute><ReportedComments></ReportedComments></AdminRoute>
+          element:<ReportedComments></ReportedComments>
         },
         
       ]
