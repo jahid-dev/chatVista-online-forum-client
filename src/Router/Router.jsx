@@ -7,6 +7,12 @@ import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import AddPost from "../Pages/Dashboard/AddPost/AddPost";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
+import MyPost from "../Pages/Dashboard/MyPost/MyPost";
+import AdminProfile from "../Pages/Dashboard/Admin/AdminProfile";
+import AdminRoute from "./AdminRoute";
+import MakeAnnouncement from "../Pages/Dashboard/Admin/MakeAnnouncement";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import ReportedComments from "../Pages/Dashboard/Admin/ReportedComments";
 
 
 const router = createBrowserRouter([
@@ -33,6 +39,7 @@ const router = createBrowserRouter([
       path:"dashboard",
       element: <Dashboard></Dashboard>,
       children:[
+        //normal user routes
         {
           path:"myprofile",
           element:<MyProfile></MyProfile>,
@@ -40,7 +47,31 @@ const router = createBrowserRouter([
         {
           path:"addpost",
           element:<AddPost></AddPost>
-        }
+        },
+        {
+          path:"myposts",
+          element:<MyPost></MyPost>
+        },
+
+        //admin only routes
+
+        {
+          path: 'adminProfile',
+          element: <AdminRoute><AdminProfile></AdminProfile></AdminRoute>
+        },
+        {
+          path: 'makeannouncement',
+          element: <AdminRoute><MakeAnnouncement></MakeAnnouncement></AdminRoute>
+        },
+        {
+          path: 'manageusers',
+          element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
+        },
+        {
+          path: 'reportedcomments',
+          element: <AdminRoute><ReportedComments></ReportedComments></AdminRoute>
+        },
+        
       ]
     }
   ]);

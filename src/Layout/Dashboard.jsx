@@ -1,6 +1,10 @@
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
+
+
+    const [isAdmin] = useAdmin();
     return (
         <div className="flex flex-col md:flex-row min-h-screen">
             {/* Sidebar */}
@@ -14,9 +18,55 @@ const Dashboard = () => {
                 </div>
                 <nav>
                     <ul className="text-center text-black">
+                        {
+                            isAdmin ? <>
+
+                    <li>
+                            <NavLink
+                                to="/dashboard/adminProfile"
+                                className="block py-2 px-4 hover:bg-gray-500 rounded"
+                                activeClassName="bg-blue-700"
+                            >
+                               Admin Profile
+                            </NavLink>
+                        </li>
                         <li>
                             <NavLink
-                                to="myprofile"
+                                to="/dashboard/makeannouncement"
+                                className="block py-2 px-4 hover:bg-gray-500 rounded"
+                                activeClassName="bg-blue-700"
+                            >
+                                Make Announcement
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="/dashboard/manageusers"
+                                className="block py-2 px-4 hover:bg-gray-500 rounded"
+                                activeClassName="bg-blue-700"
+                            >
+                               Manage Users
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="/dashboard/reportedcomments"
+                                className="block py-2 px-4 hover:bg-gray-500 rounded"
+                                activeClassName="bg-blue-700"
+                            >
+                              Reported Comments
+                            </NavLink>
+                        </li>
+
+                            </> 
+
+                            :
+
+
+                            <>
+                                <li>
+                            <NavLink
+                                to="/dashboard/myprofile"
                                 className="block py-2 px-4 hover:bg-gray-500 rounded"
                                 activeClassName="bg-blue-700"
                             >
@@ -25,7 +75,7 @@ const Dashboard = () => {
                         </li>
                         <li>
                             <NavLink
-                                to="addpost"
+                                to="/dashboard/addpost"
                                 className="block py-2 px-4 hover:bg-gray-500 rounded"
                                 activeClassName="bg-blue-700"
                             >
@@ -34,13 +84,17 @@ const Dashboard = () => {
                         </li>
                         <li>
                             <NavLink
-                                to="mypost"
+                                to="/dashboard/mypost"
                                 className="block py-2 px-4 hover:bg-gray-500 rounded"
                                 activeClassName="bg-blue-700"
                             >
                                 My Post
                             </NavLink>
                         </li>
+                            </>
+                            
+                        }
+                        
                     </ul>
                 </nav>
             </aside>
