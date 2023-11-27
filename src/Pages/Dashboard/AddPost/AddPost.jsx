@@ -1,20 +1,27 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import Select from 'react-select';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const AddPost = () => {
+  const axiosSecure = useAxiosSecure();
   const [authorImage, setAuthorImage] = useState('');
   const [authorName, setAuthorName] = useState('');
   const [authorEmail, setAuthorEmail] = useState('');
   const [postTitle, setPostTitle] = useState('');
   const [postDescription, setPostDescription] = useState('');
   const [tag, setTag] = useState(null);
-  const [upVote, setUpVote] = useState(0);
-  const [downVote, setDownVote] = useState(0);
+  const [postTime, setPostTime] = useState('');
+  const [postImg, setPostImg] = useState('');
 
   const tagOptions = [
-    { value: 'technology', label: 'Technology' },
-    { value: 'programming', label: 'Programming' },
-    { value: 'design', label: 'Design' },
+    { value: 'General', label: 'General' },
+    { value: 'Technology', label: 'Technology' },
+    { value: 'Movies', label: 'Movies' },
+    { value: 'Music', label: 'Music' },
+    { value: 'Gaming', label: 'Gaming' },
+    { value: 'Sports', label: 'Sports' },
     // Add more tag options as needed
   ];
 
@@ -22,27 +29,60 @@ const AddPost = () => {
     setTag(selectedOption);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Basic validation
-    if (!validateUrl(authorImage) || !authorName || !validateEmail(authorEmail) || !postTitle || !postDescription || !tag) {
+    if (
+      !validateUrl(authorImage) ||
+      !authorName ||
+      !validateEmail(authorEmail) ||
+      !postTitle ||
+      !postDescription ||
+      !tag ||
+      !postTime ||
+      !validateUrl(postImg)
+    ) {
       alert('Please fill in all required fields with valid information.');
       return;
     }
 
-    // Perform any actions you need with the form data (e.g., send to the server)
+    // Prepare the data to be sent to the server
+    const postData = {
+      authorImage,
+      authorName,
+      authorEmail,
+      postTitle,
+      postDescription,
+      tag: tag.value, // Send the value of the selected tag
+      postTime,
+      postImg,
+    };
 
-    // Reset the form fields
-    setAuthorImage('');
-    setAuthorName('');
-    setAuthorEmail('');
-    setPostTitle('');
-    setPostDescription('');
-    setTag(null);
-    setUpVote(0);
-    setDownVote(0);
+    try {
+      // Send a POST request to your server using Axios
+      const response = await axiosSecure.post('/posts', postData);
+
+      // Handle the response as needed
+      console.log('Server response:', response);
+
+      // Reset the form fields after successful submission
+      setAuthorImage('');
+      setAuthorName('');
+      setAuthorEmail('');
+      setPostTitle('');
+      setPostDescription('');
+      setTag(null);
+      setPostTime('');
+      setPostImg('');
+
+      // Optionally, you can perform additional actions based on the server response
+    } catch (error) {
+      // Handle errors
+      console.error('Error submitting the form:', error);
+    }
   };
+
 
   const validateUrl = (url) => {
     // Basic URL validation
@@ -119,22 +159,24 @@ const AddPost = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-600 text-sm font-semibold mb-2">UpVote:</label>
-          <input
-            type="number"
+          <label className="block text-gray-600 text-sm font-semibold mb-2">Post Time:</label>
+          <DatePicker
+            selected={postTime}
+            onChange={(date) => setPostTime(date)}
+            showTimeSelect
+            timeFormat="HH:mm"
+            dateFormat="MMMM d, yyyy h:mm aa"
             className="w-full p-2 border rounded"
-            value={upVote}
-            onChange={(e) => setUpVote(e.target.value)}
+            required
           />
         </div>
-
         <div className="mb-4">
-          <label className="block text-gray-600 text-sm font-semibold mb-2">DownVote:</label>
+          <label className="block text-gray-600 text-sm font-semibold mb-2">Post Image (URL):</label>
           <input
-            type="number"
+            type="text"
             className="w-full p-2 border rounded"
-            value={downVote}
-            onChange={(e) => setDownVote(e.target.value)}
+            value={postImg}
+            onChange={(e) => setPostImg(e.target.value)}
           />
         </div>
 
