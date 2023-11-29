@@ -13,6 +13,7 @@ import AdminRoute from "./AdminRoute";
 import MakeAnnouncement from "../Pages/Dashboard/Admin/MakeAnnouncement";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import ReportedComments from "../Pages/Dashboard/Admin/ReportedComments";
+import HomePostDetails from "../components/MainSection/Post/HomePostDetails";
 
 
 const router = createBrowserRouter([
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
         {
           path: "/",
           element: <Home></Home>,
+        },
+        {
+          path: '/homepostdetails/:id',
+          element: <HomePostDetails></HomePostDetails>,
+          loader: ({ params }) => fetch(`http://localhost:5000/posts/${params.id}`)
         },
         {
           path: 'login',
@@ -57,19 +63,19 @@ const router = createBrowserRouter([
 
         {
           path: 'adminProfile',
-          element:<AdminProfile></AdminProfile>
+          element:<AdminRoute><AdminProfile></AdminProfile></AdminRoute>
         },
         {
           path: 'makeannouncement',
-          element:<MakeAnnouncement></MakeAnnouncement>
+          element:<AdminRoute><MakeAnnouncement></MakeAnnouncement></AdminRoute>
         },
         {
           path: 'manageusers',
-          element:<ManageUsers></ManageUsers>
+          element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
         },
         {
           path: 'reportedcomments',
-          element:<ReportedComments></ReportedComments>
+          element:<AdminRoute><ReportedComments></ReportedComments></AdminRoute>
         },
         
       ]

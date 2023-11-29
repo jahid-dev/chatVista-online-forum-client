@@ -12,8 +12,8 @@ import {
   Collapse,
 } from "@material-tailwind/react";
 import { FaHome, FaUserCircle, FaUserFriends, FaUserPlus } from "react-icons/fa";
-import { BiBarChartSquare, BiBell, BiChevronDown, BiDesktop, BiPowerOff } from "react-icons/bi";
-import { CiLogin } from "react-icons/ci";
+import { BiBell, BiChevronDown, BiDesktop, BiPowerOff } from "react-icons/bi";
+import { CiLogin, CiMenuBurger } from "react-icons/ci";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import toast from "react-hot-toast";
@@ -202,7 +202,7 @@ export const NavBar = () => {
           onClick={toggleIsNavOpen}
           className="ml-auto mr-2 lg:hidden"
         >
-          <BiBarChartSquare className="h-6 w-6" />
+          <CiMenuBurger  className="h-6 w-6 " /> 
         </IconButton>
          <div className="flex items-center">
           {user && (
