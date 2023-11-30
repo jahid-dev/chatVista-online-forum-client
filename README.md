@@ -1,6 +1,4 @@
-#!/bin/bash
 
-cat <<EOF
 ### Features
 - **Responsive Design**
   - *Description:* The forum features a responsive homepage design, optimized for seamless user experiences across various devices, including desktops, tablets, and mobile phones.
