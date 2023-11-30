@@ -19,11 +19,9 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import toast from "react-hot-toast";
 import useAnnounce from "../../../hooks/useAnnounce";
 
-
 export const NavBar = () => {
   const navigate = useNavigate();
   const { totalAnnouncements } = useAnnounce();
- 
   const { user, logOut } = useContext(AuthContext);
 
   const handleLogOut = () => {
@@ -38,26 +36,26 @@ export const NavBar = () => {
   // profile menu component
   const profileMenuItems = user
     ? [
-        {
-          id: "name",
-          label: <>{user.displayName}</>,
-          icon: <FaUserCircle />,
-        },
-        {
-          id: "dashboard",
-          label: <Link to="/dashboard">Dashboard</Link>,
-          icon: <BiDesktop />,
-        },
-        {
-          id: "signOut",
-          label: (
-            <a onClick={handleLogOut} className="btn btn-sm">
-              Sign Out
-            </a>
-          ),
-          icon: <BiPowerOff />,
-        },
-      ]
+      {
+        id: "name",
+        label: <>{user.displayName}</>,
+        icon: <FaUserCircle />,
+      },
+      {
+        id: "dashboard",
+        label: <Link to="/dashboard">Dashboard</Link>,
+        icon: <BiDesktop />,
+      },
+      {
+        id: "signOut",
+        label: (
+          <a onClick={handleLogOut} className="btn btn-sm">
+            Sign Out
+          </a>
+        ),
+        icon: <BiPowerOff />,
+      },
+    ]
     : [];
 
   function ProfileMenu() {
@@ -66,30 +64,29 @@ export const NavBar = () => {
     const closeMenu = () => setIsMenuOpen(false);
 
 
-    
+
     return (
       <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
         <MenuHandler>
           <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
-        >
-          {user && user.photoURL && (
-            <Avatar
-              variant="circular"
-              size="sm"
-              alt="User"
-              className="border border-gray-900 p-0.5"
-              src={user.photoURL}
+            variant="text"
+            color="blue-gray"
+            className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+          >
+            {user && user.photoURL && (
+              <Avatar
+                variant="circular"
+                size="sm"
+                alt="User"
+                className="border border-gray-900 p-0.5"
+                src={user.photoURL}
+              />
+            )}
+            <BiChevronDown
+              className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
+                }`}
             />
-          )}
-          <BiChevronDown
-            className={`h-3 w-3 transition-transform ${
-              isMenuOpen ? "rotate-180" : ""
-            }`}
-          />
-        </Button>
+          </Button>
         </MenuHandler>
         <MenuList className="p-1">
           {profileMenuItems.map(({ id, label, icon }, key) => {
@@ -98,11 +95,10 @@ export const NavBar = () => {
               <MenuItem
                 key={id}
                 onClick={closeMenu}
-                className={`flex items-center gap-2 rounded ${
-                  isLastItem
-                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                    : ""
-                }`}
+                className={`flex items-center gap-2 rounded ${isLastItem
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  : ""
+                  }`}
               >
                 {icon}
                 <Typography
@@ -130,13 +126,23 @@ export const NavBar = () => {
     },
     {
       id: "membership",
-      label: "Membership",
+      label: <NavLink to="membership">Membership</NavLink>,
       icon: <FaUserFriends />,
     },
     {
-      id: "joinUs",
-      label: "Join Us",
-      icon: <FaUserPlus />,
+      id: "joinus",
+
+      label: (
+        <>
+          {user ? null : <li><Link to="/login">Join Us</Link></li>}
+        </>
+      ),
+      icon: (
+        <>
+          {user ? null : <FaUserPlus />}
+        </>
+      ),
+
     },
     {
       id: "login",
@@ -145,7 +151,7 @@ export const NavBar = () => {
           {user ? null : <li><Link to="/login">Login</Link></li>}
         </>
       ),
-      icon:  (
+      icon: (
         <>
           {user ? null : <CiLogin />}
         </>
@@ -166,7 +172,7 @@ export const NavBar = () => {
       </ul>
     );
   }
-  
+
 
   const [isNavOpen, setIsNavOpen] = React.useState(false);
 
@@ -206,25 +212,28 @@ export const NavBar = () => {
           onClick={toggleIsNavOpen}
           className="ml-auto mr-2 lg:hidden"
         >
-          <CiMenuBurger  className="h-6 w-6 " /> 
+          <CiMenuBurger className="h-6 w-6 " />
         </IconButton>
-          <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="btn btn-ghost btn-circle">
-                            <div className="indicator">
-                                {/* <FaNotif></FaNotif> */}
-                                {
-                                    totalAnnouncements > 0 ? <Link to ="/announcements"> <BiBell className=" text-2xl"></BiBell>
-                                    <span className="badge badge-sm indicator-item">{ totalAnnouncements }</span>
-                                    </Link> 
-                                    : <>
-                                    <BiBell></BiBell> 
-        
-                                    </> 
-                                }
-                               
-                            </div>
-                        </label>
-                    </div>
+        <div className="flex items-center justify-center">
+          {user && (
+            <>
+              {totalAnnouncements > 0 ? (
+                <Link to="/announcements" className="flex items-center">
+                  <BiBell className="text-2xl" />
+                  <span className="badge badge-sm indicator-item text-red-700 mr-8">{totalAnnouncements}</span>
+                </Link>
+              ) : (
+                <BiBell className="text-2xl"></BiBell>
+              )}
+
+              <ProfileMenu />
+            </>
+          )}
+        </div>
+
+
+
+
       </div>
       <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />

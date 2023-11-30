@@ -1,19 +1,15 @@
-import  { useState, useContext } from "react";
-import {
-  Card,
-  Input,
-  Button,
-  Typography,
-} from "@material-tailwind/react";
+import { useState, useContext } from "react";
+import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import Swal from 'sweetalert2';
 
 const MakeAnnouncement = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
 
-  const [authorImage] = useState(user?.photoURL || ""); // Set by default and make it read-only
-  const [authorName] = useState(user?.displayName || ""); // Set by default and make it read-only
+  const [authorImage] = useState(user?.photoURL || "");
+  const [authorName] = useState(user?.displayName || "");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -21,8 +17,6 @@ const MakeAnnouncement = () => {
     e.preventDefault();
 
     try {
-      // You may want to add additional validation here before making the request
-
       const announcementData = {
         authorImage,
         authorName,
@@ -30,18 +24,25 @@ const MakeAnnouncement = () => {
         description,
       };
 
-      // Send a POST request to your server endpoint
       const response = await axiosSecure.post("/announcements", announcementData);
 
-      // Handle the response as needed
       console.log("Announcement submitted successfully:", response.data);
 
-      
+      Swal.fire({
+        icon: 'success',
+        title: 'Announcement Submitted!',
+        text: 'Your announcement has been submitted successfully.',
+      });
+
       // You may want to redirect or update the UI in your application based on the response
     } catch (error) {
       console.error("Error submitting announcement:", error);
 
-      // Handle errors and update the UI accordingly
+      Swal.fire({
+        icon: 'error',
+        title: 'Submission Error',
+        text: 'There was an error submitting your announcement. Please try again.',
+      });
     }
   };
 

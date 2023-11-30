@@ -77,7 +77,7 @@ const AddPost = () => {
       const response = await axiosSecure.post('/posts', postData);
 
       // Handle the response as needed
-      console.log('Server response:', response);
+   
 
       // Increment the user's post count
       setUserPostCount(userPostCount + 1);
@@ -99,7 +99,7 @@ const AddPost = () => {
       // Optionally, you can perform additional actions based on the server response
     } catch (error) {
       // Handle errors
-      console.error('Error submitting the form:', error);
+   
 
       // Display SweetAlert2 error message
       Swal.fire({

@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 
+
 const Dashboard = () => {
 
 
@@ -12,9 +13,6 @@ const Dashboard = () => {
                 <div className="flex items-center mb-8">
                     <img className="w-12 mr-2" src="https://i.ibb.co/NjF9Xrb/Adobe-Stock-3-Xfw-F5i-Vh-D.png" alt="" />
                     <span className="text-2xl font-bold text-black">chatVista</span>
-                </div>
-                <div className="mb-4">
-                    <h2 className="text-2xl font-semibold text-center text-black">Admin</h2>
                 </div>
                 <nav>
                     <ul className="text-center text-black">
@@ -94,7 +92,10 @@ const Dashboard = () => {
                             </>
                             
                         }
-                        
+                          
+                    <li>
+                        <NavLink to="/"> <span> Home</span> </NavLink>
+                    </li>
                     </ul>
                 </nav>
             </aside>

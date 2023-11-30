@@ -14,6 +14,9 @@ import MakeAnnouncement from "../Pages/Dashboard/Admin/MakeAnnouncement";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import ReportedComments from "../Pages/Dashboard/Admin/ReportedComments";
 import HomePostDetails from "../components/MainSection/Post/HomePostDetails";
+import Announcement from "../components/MainSection/Announcement/Announcement";
+import Membership from "../Pages/Membership/Membership";
+import JoinUs from "../Pages/JoinUs/JoinUs";
 
 
 const router = createBrowserRouter([
@@ -29,6 +32,18 @@ const router = createBrowserRouter([
         {
           path: '/homepostdetails/:id',
           element: <HomePostDetails></HomePostDetails>,
+        },
+        {
+          path: "/announcements",
+          element: <Announcement></Announcement>
+        },
+        {
+          path: 'membership',
+          element: <Membership></Membership>
+        },
+        {
+          path: 'joinus',
+          element: <JoinUs></JoinUs>
         },
         {
           path: 'login',

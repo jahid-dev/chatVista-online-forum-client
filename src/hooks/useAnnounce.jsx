@@ -12,7 +12,6 @@ const useAnnounce = () => {
     });
  
     const totalAnnouncements = announcements?.length;
-    console.log(totalAnnouncements);
     return { announcements, totalAnnouncements, loadingAncc , refethcAnnc}
 };
 

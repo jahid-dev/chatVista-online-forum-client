@@ -1,5 +1,15 @@
+import { useForm } from "react-hook-form";
+import useSearch from "../../../hooks/useSearch";
 
 const HeroSection = () => {
+  const { setSearchTag } = useSearch();    
+   const { register, handleSubmit, reset } = useForm()
+
+  const handleSearchClick = async(data) => {
+        const searchTag = data.searchTag;
+        setSearchTag(searchTag)
+       reset()
+    };
     return (
         <div
         className="relative bg-cover bg-center h-96 sm:h-80 md:h-96 lg:h-120 xl:h-160"
@@ -11,27 +21,15 @@ const HeroSection = () => {
              Forum Search
           </h1>
           <div className="relative w-full max-w-md mx-auto">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full py-2 px-4 rounded-full bg-gray-100 text-gray-800 placeholder-gray-500 focus:outline-none"
-            />
-            <button className="absolute right-0 top-0 mt-2 mr-3 text-gray-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="h-6 w-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
+          <form onSubmit={handleSubmit(handleSearchClick)} className="flex space-x-4">
+                    <input
+                        type="text"
+                        {...register('searchTag')}
+                        placeholder="Search by tags"
+                        className="text-black rounded-l-md px-4 py-2 flex-1"
+                    />
+                    <input type="submit" value='search' className="bg-blue-500 text-white px-4 py-2 rounded-r-md"/>
+                </form>
           </div>
         </div>
       </div>

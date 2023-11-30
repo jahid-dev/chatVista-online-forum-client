@@ -1,6 +1,7 @@
 
-import Announcement from "./Announcement/Announcement";
-import MapPost from "./Post/MapPost";
+
+
+import TotalPost from "./Post/TotalPost";
 import TagSection from "./TagSection";
 
 
@@ -9,9 +10,7 @@ const MainSection = () => {
         <div>
             <TagSection></TagSection>
 
-            <Announcement></Announcement>
-
-           <MapPost></MapPost>
+           <TotalPost></TotalPost>
            
         </div>
     );
