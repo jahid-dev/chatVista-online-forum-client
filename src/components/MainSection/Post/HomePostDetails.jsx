@@ -1,17 +1,45 @@
-import { useState } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link,  useParams } from "react-router-dom";
 import { FaThumbsUp, FaThumbsDown, FaComment, FaShare } from "react-icons/fa";
 import { Card, CardHeader, CardBody, Typography, Avatar } from "@material-tailwind/react";
-import CommentSection from "./CommentSection";
 
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const HomePostDetails = () => {
-  const postDetails = useLoaderData();
-  const axiosPublic = useAxiosPublic();
+ 
+  const { user } = useContext(AuthContext);
+  const commenterEmail = user?.email;
+  const commenter = user?.displayName;
+  const commenterImg = user?.photoURL;
+  const commentTime = new Date();
 
-  const {
-    postId,
+  const [isUpvoted, setIsUpvoted] = useState(false);
+  const [isDownvoted, setIsDownvoted] = useState(false);
+  const [comment, setComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  
+  const {id} = useParams()
+  console.log(id);
+  const axiosSecure = useAxiosSecure();
+  const { data: post,isPending:loading, refetch } = useQuery({
+    queryKey: ["post"],
+    queryFn: async() => {
+      const res = await axiosSecure.get(`/posts/${id}`)
+      return res.data;
+    }
+  })
+if(loading){
+  return <div>
+    Loading....
+  </div>
+}
+  console.log(post);
+  let {
+    _id,
     authorName,
     authorImg,
     postTitle,
@@ -21,32 +49,98 @@ const HomePostDetails = () => {
     upVote,
     downVote,
     share,
-    commentsCount,
+    commentCount,
     createdAt,
-  } = postDetails;
+  } = post;
 
-  const [isUpvoted, setIsUpvoted] = useState(false);
-  const [isDownvoted, setIsDownvoted] = useState(false);
+ 
 
   const handleUpvote = async () => {
-    try {
-      if (!isUpvoted) {
-        await axiosPublic.post(`/posts/upvote/${postId}`);
-        setIsUpvoted(true);
+    if (!isUpvoted) {
+      if (isDownvoted) {
+        setIsDownvoted(false);
+        if (downVote > 0) {
+          downVote--;
+        }
+
       }
-    } catch (error) {
-      console.error("Error upvoting post:", error);
+      upVote++;
+
+      setIsUpvoted(true);
+    } else {
+      if (upVote > 0) {
+        upVote--;
+      }
+
+      setIsUpvoted(false);
     }
+    
+    const res = await axiosSecure.patch(`/posts/update/${_id}`, { upVote, downVote });
+    if (res?.data) {
+      refetch()
+    }
+
+    
+  };
+  // handle dislike
+  const handleDownvote = async () => {
+    if (!isDownvoted) {
+      if (isUpvoted) {
+        setIsUpvoted(false);
+        if (upVote > 0) {
+          upVote--;
+        }
+      }
+      downVote++;
+
+      setIsDownvoted(true);
+    } else {
+      if (downVote > 0) {
+        downVote--;
+      }
+      setIsDownvoted(false);
+    }
+    const res = await axiosSecure.patch(`/posts/update/${_id}`, { upVote, downVote });
+    if (res?.data) {
+      refetch()
+    }
+    
   };
 
-  const handleDownvote = async () => {
+  // Handle comment input change
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
+  // Handle comment submission
+  const handleSubmitComment = async () => {
+    if (comment.trim() === "") {
+      // Handle empty comment submission
+      return;
+    }
+
+    // Set isSubmitting to true to show loading state
+    setIsSubmitting(true);
+
     try {
-      if (!isDownvoted) {
-        await axiosPublic.post(`/posts/downvote/${postId}`);
-        setIsDownvoted(true);
-      }
+      // Make a POST request to your server API endpoint
+      const response = await axiosSecure.post("/comments", {
+        postTitle,
+        commentText: comment,
+        commenter,
+        commenterImg,
+        commenterEmail,
+        commentTime: commentTime.toISOString(), // Convert commentTime to a string
+      });
+
+      // Assuming the server request is successful, you can reset the form
+      setComment("");
+      setIsSubmitting(false);
+      console.log("Comment submitted successfully", response.data);
     } catch (error) {
-      console.error("Error downvoting post:", error);
+      console.error("Error submitting comment", error);
+      // Handle error, e.g., show an error message to the user
+      setIsSubmitting(false);
     }
   };
 
@@ -111,8 +205,29 @@ const HomePostDetails = () => {
             </Typography>
           </div>
 
-          {/* Comment section */}
-          <CommentSection postId={postId} />
+          <div>
+      {/* Comment field */}
+      <div className="comment-field mt-4">
+        <label htmlFor="comment" className="text-gray-400">
+          Add your comment:
+        </label>
+        <textarea 
+          id="comment"
+          value={comment}
+          onChange={handleCommentChange}
+          className="w-full p-2 border border-gray-300 rounded-md text-black"
+          rows="4"
+          placeholder="Type your comment here..."
+        />
+        <button
+          onClick={handleSubmitComment}
+          disabled={isSubmitting}
+          className="btn btn-accent mt-2"
+        >
+          {isSubmitting ? "Submitting..." : "Submit Comment"}
+        </button>
+      </div>
+    </div>
 
           {/* Post actions */}
           <div className="post-actions flex items-center mt-4">
@@ -127,7 +242,7 @@ const HomePostDetails = () => {
             </div>
             <div className="flex items-center mr-4">
               <FaComment className="vote-icon mr-1" />
-              <span className="text-sm">{commentsCount} Comments</span>
+              <span className="text-sm">{commentCount} Comments</span>
             </div>
             <div className="flex items-center">
               <FaShare className="vote-icon mr-1" />

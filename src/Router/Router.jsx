@@ -29,7 +29,6 @@ const router = createBrowserRouter([
         {
           path: '/homepostdetails/:id',
           element: <HomePostDetails></HomePostDetails>,
-          loader: ({ params }) => fetch(`http://localhost:5000/posts/${params.id}`)
         },
         {
           path: 'login',

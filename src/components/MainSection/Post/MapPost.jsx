@@ -1,25 +1,19 @@
-import  { useEffect, useState } from 'react';
+import  {  useState } from 'react';
 import ShowPost from './ShowPost';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
-import HomePostDetails from './HomePostDetails'; // Import HomePostDetails
+
+import HomePostDetails from './HomePostDetails'; 
+import usePosts from '../../../hooks/usePosts';
 
 const MapPost = () => {
-  const axiosPublic = useAxiosPublic();
-  const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosPublic.get('/posts');
-        setPosts(response.data);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
-    };
-
-    fetchData();
-  }, [axiosPublic]);
+  const { posts,  loading } = usePosts();
+  console.log(posts);
+  if(loading){
+    return <div>
+      Loading....
+    </div>
+  }
+  
 
   const handlePostClick = (post) => {
     setSelectedPost(post);
@@ -33,8 +27,8 @@ const MapPost = () => {
           <ShowPost key={post._id} post={post} onClick={() => handlePostClick(post)} />
         ))}
       </div>
-
-      {/* Display post details when a post is selected */}
+        
+      
       {selectedPost && <HomePostDetails post={selectedPost} />}
     </div>
   );

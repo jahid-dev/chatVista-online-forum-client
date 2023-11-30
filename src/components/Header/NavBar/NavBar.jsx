@@ -17,9 +17,13 @@ import { CiLogin, CiMenuBurger } from "react-icons/ci";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import toast from "react-hot-toast";
+import useAnnounce from "../../../hooks/useAnnounce";
+
 
 export const NavBar = () => {
   const navigate = useNavigate();
+  const { totalAnnouncements } = useAnnounce();
+ 
   const { user, logOut } = useContext(AuthContext);
 
   const handleLogOut = () => {
@@ -204,16 +208,23 @@ export const NavBar = () => {
         >
           <CiMenuBurger  className="h-6 w-6 " /> 
         </IconButton>
-         <div className="flex items-center">
-          {user && (
-            <>
-              <IconButton variant="text" color="blue-gray">
-                <BiBell className="h-4 w-4" />
-              </IconButton>
-              <ProfileMenu />
-            </>
-          )}
-        </div>
+          <div className="dropdown dropdown-end">
+                        <label tabIndex={0} className="btn btn-ghost btn-circle">
+                            <div className="indicator">
+                                {/* <FaNotif></FaNotif> */}
+                                {
+                                    totalAnnouncements > 0 ? <Link to ="/announcements"> <BiBell className=" text-2xl"></BiBell>
+                                    <span className="badge badge-sm indicator-item">{ totalAnnouncements }</span>
+                                    </Link> 
+                                    : <>
+                                    <BiBell></BiBell> 
+        
+                                    </> 
+                                }
+                               
+                            </div>
+                        </label>
+                    </div>
       </div>
       <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />

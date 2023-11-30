@@ -8,16 +8,17 @@ import Swal from 'sweetalert2';
 
 const AddPost = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useContext(AuthContext);
+  const userEmail = user?.email;
+  const userName = user?.displayName;
+  const authorImg = user?.photoURL;
+
   const [postTitle, setPostTitle] = useState('');
   const [postDescription, setPostDescription] = useState('');
   const [tag, setTag] = useState(null);
   const [postTime, setPostTime] = useState('');
   const [postImg, setPostImg] = useState('');
-
-  const { user } = useContext(AuthContext);
-  const userEmail = user?.email;
-  const userName = user?.displayName;
-  const authorImg = user?.photoURL;
+  const [userPostCount, setUserPostCount] = useState(0); // Track the number of posts by the current user
 
   const tagOptions = [
     { value: 'General', label: 'General' },
@@ -26,11 +27,16 @@ const AddPost = () => {
     { value: 'Music', label: 'Music' },
     { value: 'Gaming', label: 'Gaming' },
     { value: 'Sports', label: 'Sports' },
-    // Add more tag options as needed
   ];
 
   const handleTagChange = (selectedOption) => {
     setTag(selectedOption);
+  };
+
+  const validateUrl = (url) => {
+    // Basic URL validation
+    const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
+    return urlPattern.test(url);
   };
 
   const handleSubmit = async (e) => {
@@ -45,6 +51,12 @@ const AddPost = () => {
       !validateUrl(postImg)
     ) {
       alert('Please fill in all required fields with valid information.');
+      return;
+    }
+
+    // Check if the user has reached the maximum number of posts (5)
+    if (userPostCount >= 5) {
+      alert('You have reached the maximum limit of 5 posts.');
       return;
     }
 
@@ -67,8 +79,10 @@ const AddPost = () => {
       // Handle the response as needed
       console.log('Server response:', response);
 
+      // Increment the user's post count
+      setUserPostCount(userPostCount + 1);
+
       // Reset the form fields after successful submission
-     
       setPostTitle('');
       setPostDescription('');
       setTag(null);
@@ -95,15 +109,6 @@ const AddPost = () => {
       });
     }
   };
-
-  
-  const validateUrl = (url) => {
-    // Basic URL validation
-    const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
-    return urlPattern.test(url);
-  };
-
- 
 
   return (
     <div className="container mx-auto my-8">
