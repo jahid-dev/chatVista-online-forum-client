@@ -1,8 +1,24 @@
-# React + Vite
+#!/bin/bash
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+echo "### Features"
+echo "- **Responsive Design**"
+echo "  - *Description:* The forum features a responsive homepage design, optimized for seamless user experiences across various devices, including desktops, tablets, and mobile phones."
+echo "  - *Implementation:* Utilized media queries and responsive design principles to ensure a consistent and visually appealing layout on different screen sizes."
+echo ""
+echo "- **Dynamic Post Sorting and Pagination**"
+echo "  - *Description:* Users can view posts sorted by popularity (based on upvotes and downvotes) and navigate through the content with a pagination feature."
+echo "  - *Implementation:* Employed MongoDB aggregation pipeline to calculate vote differences and sort posts accordingly. Implemented a pagination system to display five posts per page."
+echo ""
+echo "- **User Interaction and Engagement**"
+echo "  - *Description:* Users can engage with posts through upvotes, downvotes, comments, and sharing. Additionally, the forum includes a comment section with reporting functionality."
+echo "  - *Implementation:* Integrated upvote and downvote features, implemented a comment section with dynamic comment lengths, and used the react-share package for post sharing. Admins can manage reported comments."
+echo ""
+echo "- **Membership and User Dashboard**"
+echo "  - *Description:* The platform offers a membership system with a payment page, providing additional privileges such as a Gold badge for members. Users have a personalized dashboard for managing their profile, posts, and interactions."
+echo "  - *Implementation:* Created a private membership page for payments, user dashboard with routes for profile, post management, and added badge rewards for registration and membership."
+echo ""
+echo "- **Admin Dashboard and Management**"
+echo "  - *Description:* Admins have access to a dedicated dashboard with features for managing users, reported comments, making announcements, and maintaining site statistics."
+echo "  - *Implementation:* Implemented admin-specific routes, user management functionalities, an announcement system, and a reported activities page. Included server-side search for efficient user lookup."
+echo ""
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
