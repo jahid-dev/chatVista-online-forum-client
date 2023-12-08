@@ -17,6 +17,8 @@ import HomePostDetails from "../components/MainSection/Post/HomePostDetails";
 import Announcement from "../components/MainSection/Announcement/Announcement";
 import Membership from "../Pages/Membership/Membership";
 import JoinUs from "../Pages/JoinUs/JoinUs";
+import PrivateRoute from "./PrivateRoute";
+import Comments from "../Pages/Dashboard/MyPost/Comments";
 
 
 const router = createBrowserRouter([
@@ -31,11 +33,11 @@ const router = createBrowserRouter([
         },
         {
           path: '/homepostdetails/:id',
-          element: <HomePostDetails></HomePostDetails>,
+          element: <PrivateRoute><HomePostDetails></HomePostDetails></PrivateRoute>,
         },
         {
           path: "/announcements",
-          element: <Announcement></Announcement>
+          element: <PrivateRoute><Announcement></Announcement></PrivateRoute>,
         },
         {
           path: 'membership',
@@ -71,6 +73,10 @@ const router = createBrowserRouter([
         {
           path:"mypost",
           element:<MyPost></MyPost>
+        },
+        {
+          path: 'allComments/:id',
+          element: <Comments></Comments>
         },
 
         //admin only routes

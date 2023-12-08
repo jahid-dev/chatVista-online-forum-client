@@ -33,7 +33,7 @@ const ReportedComments = () => {
                                 <div className="flex space-x-2">
                                     <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Remove</button>
                                     <button className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Warn User</button>
-                                     <Link to = {`/postDetails/${comment.postId}`}><button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">View Content</button></Link>
+                                     <Link to = {`/homepostdetails/${comment.postId}`}><button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">View Content</button></Link>
                                 </div>
                             </div>
                             <p className="text-gray-700 mt-2">

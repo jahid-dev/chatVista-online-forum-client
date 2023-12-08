@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { useState } from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Comments = () => {
     const [feedbackValues, setFeedbackValues] = useState({});

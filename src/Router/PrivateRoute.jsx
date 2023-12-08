@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useContext } from "react";
-import { AuthContext } from "../../firebase/Provider/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
 
 
 const PrivateRoute = ({children}) => {
