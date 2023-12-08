@@ -25,7 +25,7 @@
 ## Technologies Used
 
 ### Frontend:
-- **React, Material-UI, Tailwind CSS:** For building a modular, visually appealing, and responsive user interface.
+- **React, Material-Tailwind, Tailwind CSS:** For building a modular, visually appealing, and responsive user interface.
 - **Axios:** For handling asynchronous HTTP requests.
 
 ### Backend:
